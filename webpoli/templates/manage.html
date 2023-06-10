@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+
+<article>
+  <aside class="l_box">
+
+  <div class="fenlei">
+    <h1>信息统计</h1>
+
+        <ul>
+            <li>网站实际运行{{ tm.days }}天</li>
+            <li>网站有信息{{ ct }}条</li>
+            <li>网站为{{ site.use }}名用户提供服务</li>
+        </ul>
+  </div>
+
+      <div class="fenlei">
+    <h1>admin系统</h1>
+    <div align="center">
+        <ul>
+            <h2><li><a href="{% url 'admin:index' %}" >admin登入</a></li></h2>
+        </ul>
+    </div>
+  </div>
+
+
+      <div class="about_me">
+        <h2>友情链接</h2>
+        <ul>
+            <a href="https://www.lzu.edu.cn/" target="new">&nbsp;&nbsp;兰州大学</a>
+        </ul>
+          <ul>
+            <a href="https://github.com/sijianxin01" target="new">&nbsp;&nbsp;Github</a>
+        </ul>
+      </div>
+  </aside>
+  {% endblock %}
+
+{% block content %}
+    <main class="r_box">
+     <div class="about">
+        <h2>数据管理</h2>
+        <br>
+        <h4 align="left">数据导出</h4>
+
+         <form align="center" action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+             <table>{{ df.as_p }}</table>
+        <br />
+        <input type="submit" value="下载"></form>
+
+
+        <br />
+        <h4 align="left">数据批量导入（该操作需要管理员权限）</h4>
+      <br />
+        <p>&nbsp;&nbsp;上传文件说明：</p>
+        <p>&nbsp;&nbsp;上传excel格式文件，它包含以下字段：</p>
+         <p>&nbsp;&nbsp;QueSub(反馈人) City(城市) Title(标题) Class(类型) Time(提交时间)</p>
+         <p>&nbsp;&nbsp;Content(内容) RepTime(回复时间)	RepDep(回复部门)</p>
+         <p>&nbsp;&nbsp;RepCon(回复内容) URL(来源)</p>
+
+     <br />
+        {% if request.user.is_superuser %}
+         <form align="center" action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+             <table><input type="file" name="f"></table>
+        <br />
+        <input type="submit" value="上传"></form>
+         {% else %}
+
+         <p align="center">抱歉，您不具备管理员权限</p>
+        {% endif %}
+
+
+     </div>
+  </main>
+
+    {% if messages %}
+        <script>
+            {% for msg in messages %}
+                alert('{{ msg.message }}');
+            {% endfor %}
+        </script>
+    {% endif %}
+
+{% endblock %}

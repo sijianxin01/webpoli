@@ -1,0 +1,180 @@
+<html>
+<head>
+{% load static %}
+<title>{% block title %}阳光政务{% endblock %}</title>
+
+<link rel="icon" type="image/png" sizes="144x144" href="{% static 'images/favicon.ico' %}"/>
+<link rel="apple-touch-icon" type="image/png" sizes="144x144" href="images/favicon.ico"/>
+
+{#<link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">#}
+<link href="{% static "css/base.css" %}" rel="stylesheet">
+<link href="{% static "css/index.css" %}" rel="stylesheet">
+<link href="{% static "css/m.css" %}" rel="stylesheet">
+<link href="{% static "css/info.css" %}" rel="stylesheet">
+<script src="{% static "js/jquery.min.js" %}"></script>
+<script src="{% static "js/comm.js" %}"></script>
+<script src="{% static "js/modernizr.js" %}"></script>
+<script src="{% static "js/scrollReveal.js" %}"></script>
+<script src="{% static "js/echarts.js" %}"></script>
+</head>
+
+<body>
+<header class="header-navigation" id="header">
+  <nav>
+
+      <div class="logo"><a href="javascript:;" >阳光政务平台</a></div>
+    <h2 id="mnavh"><span class="navicon"></span></h2>
+    <ul id="starlist">
+
+      <li><a href="{% url 'index' %}">政务统计信息</a></li>
+      <li><a href="{% url 'poli' 1 %}">政务信息</a></li>
+      <li><a href="{% url 'board' 1 %}">意见反馈</a></li>
+      <li><a href="{% url 'manage' %}">数据管理</a></li>
+    </ul>
+  </nav>
+</header>
+
+{% block body %}
+
+<article>
+  <aside class="l_box">
+      <div class="about_me">
+        <h2>城市检索</h2>
+        <ul>
+{#            {% for i, j in Data.city_num.items %}#}
+{#            <li><a href="{% url 'city_poli' i 1 %}" >&nbsp;&nbsp;{{ i }}({{ j }})</a>&nbsp;</li>#}
+{#            {% endfor %}#}
+                <a href="javascript:;" onchange="pg1()">
+                    <select id="sp1" style="border:0px;background: rgba(255,255,255,0.5);">
+                        {% for i, j in Data.city_num_sort %}
+                        <option id="op" value="{{ i }}">
+                            <li><a href="{% url 'city_poli' i 1 %}" >&nbsp;&nbsp;{{ i }}({{ j }})</a>&nbsp;</li>
+                        </option>
+                        {% endfor %}
+                    </select></a>
+<div></div>
+        <li><a href="{% url 'city_poli' Data.city_num_sort.0.0 1 %}" >&nbsp;&nbsp;{{ Data.city_num_sort.0.0 }}({{ Data.city_num_sort.0.1 }})</a>&nbsp;</li>
+        <li><a href="{% url 'city_poli' Data.city_num_sort.1.0 1 %}" >&nbsp;&nbsp;{{ Data.city_num_sort.1.0 }}({{ Data.city_num_sort.1.1 }})</a>&nbsp;</li>
+        <li><a href="{% url 'city_poli' Data.city_num_sort.2.0 1 %}" >&nbsp;&nbsp;{{ Data.city_num_sort.2.0 }}({{ Data.city_num_sort.2.1 }})</a>&nbsp;</li>
+
+
+
+
+        </ul>
+      </div>
+      <div class="about_me">
+        <h2>类别检索</h2>
+        <ul>
+
+        <a href="javascript:;" onchange="pg2()">
+                    <select class="select" id="sp2" style="border:0px;background: rgba(255,255,255,0.5);">
+                        {% for i, j in Data.class_num_sort %}
+                        <option id="op" value="{{ i }}">
+                            <li><a href="{% url 'class_poli' i 1 %}" >&nbsp;&nbsp;{{ i }}({{ j }})</a>&nbsp;</li>
+                        </option>
+                        {% endfor %}
+                    </select></a>
+
+
+        <div></div>
+        <li><a href="{% url 'class_poli' Data.class_num_sort.0.0 1 %}" >&nbsp;&nbsp;{{ Data.class_num_sort.0.0 }}({{ Data.class_num_sort.0.1 }})</a>&nbsp;</li>
+        <li><a href="{% url 'class_poli' Data.class_num_sort.1.0 1 %}" >&nbsp;&nbsp;{{ Data.class_num_sort.1.0 }}({{ Data.class_num_sort.1.1 }})</a>&nbsp;</li>
+        <li><a href="{% url 'class_poli' Data.class_num_sort.2.0 1 %}" >&nbsp;&nbsp;{{ Data.class_num_sort.2.0 }}({{ Data.class_num_sort.2.1 }})</a>&nbsp;</li>
+
+
+
+
+{#            {% for i, j in Data.class_num_sort %}#}
+{#            <li><a href="{% url 'class_poli' i 1 %}" >&nbsp;&nbsp;{{ i }}({{ j }})</a>&nbsp;</li>#}
+{#            {% endfor %}#}
+        </ul>
+      </div>
+    <div class="about_me">
+        <h2>热门词频</h2>
+        <ul>
+        &nbsp;&nbsp;<input type="text" id="search" align="center"><br>&nbsp;&nbsp;<button onclick="pg3()" align="center">查找关键词</button>
+
+            <li><a href="{% url 'key_poli' Data.ct.0.0 1 %}" >&nbsp;&nbsp;{{ Data.ct.0.0 }}({{ Data.ct.0.1 }})</a>&nbsp;</li>
+            <li><a href="{% url 'key_poli' Data.ct.1.0 1 %}" >&nbsp;&nbsp;{{ Data.ct.1.0 }}({{ Data.ct.1.1 }})</a>&nbsp;</li>
+            <li><a href="{% url 'key_poli' Data.ct.2.0 1 %}" >&nbsp;&nbsp;{{ Data.ct.2.0 }}({{ Data.ct.2.1 }})</a>&nbsp;</li>
+
+
+
+            {#            {% for i, j in Data.ct %}#}
+{#            <li><a href="{% url 'key_poli' i 1 %}" >&nbsp;&nbsp;{{ i }}({{ j }})</a>&nbsp;</li>#}
+{#            {% endfor %}#}
+        </ul>
+      </div>
+
+
+      <div class="about_me">
+        <h2>友情链接</h2>
+        <ul>
+            <a href="https://www.lzu.edu.cn/" target="new">&nbsp;&nbsp;兰州大学</a>
+        </ul>
+          <ul>
+            <a href="https://github.com/sijianxin01" target="new">&nbsp;&nbsp;Github</a>
+        </ul>
+      </div>
+  </aside>
+  {% endblock %}
+<a href="#" class="cd-top">Top</a>
+{% block content %}{% endblock %}
+
+</article>
+<a href="#" class="cd-top">Top</a>
+{% block script %}{% endblock %}
+
+
+
+
+
+
+
+
+
+    <script type="text/javascript">
+{#$(document).ready(function(){#}
+{#		var pg= {{ pages_num }};#}
+{#	  var s = document.getElementById("sp");#}
+{#      for(var i=1;i<=pg;i++){#}
+{#          s.innerHTML = s.innerHTML + "<option value=\""+i+"\"> "+i+" </option>";#}
+{#      }#}
+{##}
+{#	});#}
+
+    function pg1() {
+        var pg = document.getElementById("sp1").value;
+        {#console.log(pg);#}
+        var url = "{% url 'city_poli' 'pg' 1 %}";
+        url = url.replace("pg", pg);
+        console.log(url);
+        window.location.href=url;
+    }
+
+function pg2() {
+        var pg = document.getElementById("sp2").value;
+        {#console.log(pg);#}
+        var url = "{% url 'class_poli' 'pg' 1 %}";
+        url = url.replace("pg", pg);
+        console.log(url);
+        window.location.href=url;
+    }
+
+    function pg3() {
+        var pg = document.getElementById("search").value;
+        {#console.log(pg);#}
+        var url = "{% url 'key_poli' 'pg' 1 %}";
+        url = url.replace("pg", pg);
+        {#console.log(url);#}
+        window.location.href=url;
+    }
+</script>
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}逃跑{% endblock %}
+
+{% block body %}
+    <article>
+     <div class="about">
+        <br>
+        <h2 align="center">页面逃跑了</h2>
+        <br>
+     </div>
+  </article>
+
+    {% if messages %}
+        <script>
+            {% for msg in messages %}
+                alert('{{ msg.message }}');
+            {% endfor %}
+        </script>
+    {% endif %}
+
+{% endblock %}

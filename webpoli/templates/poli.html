@@ -1,0 +1,108 @@
+{% extends "base.html"  %}
+{% load static %}
+{% block content  %}
+
+<main class="r_box">
+{% for list in polis %}
+    <li>
+        <i><a href="{% url 'details' list.id %}"></a></i>
+        <h3>
+        <a href="{% url 'details' list.id %}">{{ list.Title }}</a>
+        </h3>
+        <h5>
+            <a href="{% url 'details' list.id %}">{{ list.City }}</a>
+            &nbsp;
+            <a href="{% url 'details' list.id %}">{{ list.Time }}</a>
+            &nbsp;
+            <a href="{% url 'details' list.id %}">{{ list.Class }}</a>
+        </h5>
+        <p>{{ list.Content|safe }}</p>
+    </li>
+{% endfor %}
+
+<!--分页功能-->
+<div class="pagelist">
+{% if page > 1 %}
+    <a href="{% url 'poli' page|add:-1 %}">上一页</a>
+{% endif %}
+
+{% if pages_num < 8 %}
+    {% for npage in pages %}
+        {% if npage == page %}
+            <a href="javascript:;" class="curPage">{{ npage }}</a>
+        {% else %}
+            <a href="{% url 'poli' npage %}">{{ npage }}</a>
+{#    {% endif %}#}
+        {% endif %}
+    {% endfor %}
+{% else %}
+
+    <a href="{% url 'poli' 1 %}">{{ 1 }}</a>
+    <a href="{% url 'poli' 2 %}">{{ 2 }}</a>
+    <a href="{% url 'poli' 3 %}">{{ 3 }}</a>
+
+    {% if page > 6 %}
+        <a href="javascript:;">...</a>
+    {% endif %}
+
+    {% if page > 5 %}
+    <a href="{% url 'poli' page|add:-2 %}">{{ page|add:-2 }}</a>
+    {% endif %}
+
+    {% if page > 4 and page < pages_num%}
+        <a href="{% url 'poli' page|add:-1 %}">{{ page|add:-1 }}</a>
+    {% endif %}
+
+    {% if page > 3 and page < pages_num|add:-1%}
+        <a href="javascript:;" class="curPage">{{ page }}</a>
+    {% endif %}
+
+    {% if page > 2 and page < pages_num|add:-2%}
+        <a href="{% url 'poli' page|add:1 %}">{{ page|add:1 }}</a>
+    {% endif %}
+
+    {% if page > 1 and page < pages_num|add:-3%}
+        <a href="{% url 'poli' page|add:2 %}">{{ page|add:2 }}</a>
+    {% endif %}
+
+
+
+    {% if page < pages_num|add:-4 %}
+        <a href="javascript:;">...</a>
+    {% endif %}
+
+
+    <a href="{% url 'poli' pages_num|add:-1 %}">{{ pages_num|add:-1 }}</a>
+    <a href="{% url 'poli' pages_num %}">{{ pages_num }}</a>
+
+{% endif %}
+
+{% if page < pages_num %}
+    <a href="{% url 'poli' page|add:1 %}">下一页</a>
+{% endif %}
+{#<br>#}
+{#    <a href="javascript:;" onclick="pg()"><select id="sp" style="border:0px;"></select></a> <a href="{% url 'poli' 1 %}" id="jump">跳转</a>#}
+</div>
+</main>
+
+
+{#    <script type="text/javascript">#}
+{#$(document).ready(function(){#}
+{#		var pg= {{ pages_num }};#}
+{#	  var s = document.getElementById("sp");#}
+{#      for(var i=1;i<=pg;i++){#}
+{#          s.innerHTML = s.innerHTML + "<option value=\""+i+"\"> "+i+" </option>";#}
+{#      }#}
+{##}
+{#	});#}
+{##}
+{#    function pg() {#}
+{#        var pg = document.getElementById("sp").value;#}
+{#        document.getElementById('jump').setAttribute("href", pg+".html");#}
+{##}
+{#    }#}
+{#</script>#}
+
+
+
+{% endblock  %}

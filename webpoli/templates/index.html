@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <main class="r_box">
+     <div class="about">
+        <br>
+        <h2>政务信息总览</h2>
+        <br>
+        {#显示图表#}
+         <div id="main" style="width: 600px;height:400px;"></div>
+
+         <script type="text/javascript">
+             function sub1() {
+                 // 基于准备好的dom，初始化echarts实例
+                  var myChart = echarts.init(document.getElementById('main'));
+                  myChart.clear();
+
+                  // 指定图表的配置项和数据
+                  option = {
+                      title: {
+                      text: '政务信息总量折线图'
+                    },
+                  xAxis: {
+                    type: 'category',
+                    data: {{ Data.x1|safe }}
+                  },
+                  yAxis: {
+                    type: 'value'
+                  },
+                  series: [
+                    {
+                      data: {{ Data.y1|safe }},
+                      type: 'line',
+                      smooth: true
+                    }
+                 ]
+            };
+                  // 使用刚指定的配置项和数据显示图表。
+                  myChart.setOption(option);
+             }
+             function sub2() {
+                 // 基于准备好的dom，初始化echarts实例
+                  var myChart = echarts.init(document.getElementById('main'));
+                  myChart.clear();
+                  // 指定图表的配置项和数据
+                  var option = {
+                    title: {
+                      text: '城市-政务信息数量条形图'
+                    },
+                    tooltip: {},
+                    legend: {
+                      data: ['总量']
+                    },
+                    xAxis: {
+                      data: {{ Data.x2|safe }}
+                    },
+                    yAxis: {},
+                    series: [
+                      {
+                        name: '数量',
+                        type: 'bar',
+                        data: {{ Data.y2|safe }}
+                      }
+                    ]
+                  };
+                  // 使用刚指定的配置项和数据显示图表。
+                  myChart.setOption(option);
+             }
+             function sub3() {
+                 // 基于准备好的dom，初始化echarts实例
+                  var myChart = echarts.init(document.getElementById('main'));
+                  myChart.clear();
+                  // 指定图表的配置项和数据
+                  option = {
+                      title: {
+                      text: '政务信息词云图'
+                      },
+                  graphic: {
+                      elements: [
+                        {
+                          type: "image",
+                          style: {
+                            image: "media/images/wordcloud.png",
+                            width: 540,
+                            height: 360,
+                          },
+                          left: "center",
+                          top: "5%",
+                        },
+                      ],
+                    },
+                };
+                  // 使用刚指定的配置项和数据显示图表。
+                  myChart.setOption(option);
+             }
+             sub1();
+
+        </script>
+
+        <h4 align="center">
+            <a href="javascript: void(0);" onclick="sub1()" align="left">政务信息总量折线图</a>
+            <a href="javascript: void(0);" onclick="sub2()" align="center">&nbsp;&nbsp;城市-政务信息数量条形图&nbsp;&nbsp;</a>
+            <a href="javascript: void(0);" onclick="sub3()" align="right">政务信息词云图</a>
+        </h4>
+        <br />
+
+     </div>
+  </main>
+
+    {% if messages %}
+        <script>
+            {% for msg in messages %}
+                alert('{{ msg.message }}');
+            {% endfor %}
+        </script>
+    {% endif %}
+
+{% endblock %}
